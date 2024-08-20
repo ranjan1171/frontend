@@ -1,24 +1,29 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { useSelector } from "react-redux";
 import CardFeature from "../component/CardFeature";
 import HomeCard from "../component/HomeCard";
 import { GrPrevious, GrNext } from "react-icons/gr";
 import FilterProduct from "../component/FilterProduct";
 import AllProduct from "../component/AllProduct";
-
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const productData = useSelector((state) => state.product.productList);
-  const homeProductCartList = productData.slice(1, 5);
-  const homeProductCartListVegetables = productData.filter(
-    (el) => el.category === "icecrem",
-    
 
-    []
+  // Select a range of products (e.g., first 4 products)
+  const homeProductCartList = productData.slice(1, 5);
+
+  // Filter products by categories (fixing the filter logic)
+  const categoriesToShow = ["icecream", "egg", "cupcake", "cake","mixedfruit","briyani","Garlic naan","chinese"];
+  const homeProductCartListVegetables = productData.filter((el) =>
+    categoriesToShow.includes(el.category)
   );
+
+  // Loading state arrays
   const loadingArray = new Array(4).fill(null);
   const loadingArrayFeature = new Array(10).fill(null);
 
+  // Carousel functionality
   const slideProductRef = useRef();
   const nextProduct = () => {
     slideProductRef.current.scrollLeft += 200;
@@ -26,14 +31,6 @@ const Home = () => {
   const preveProduct = () => {
     slideProductRef.current.scrollLeft -= 200;
   };
-
-
- 
-
-
-  
-
-
 
   return (
     <div className="p-2 md:p-4">
@@ -44,55 +41,55 @@ const Home = () => {
             <img
               src="https://cdn-icons-png.flaticon.com/512/2972/2972185.png"
               className="h-7"
+              alt="Delivery Icon"
             />
           </div>
           <h2 className="text-4xl md:text-7xl font-bold py-3">
             Better Taste,{" "}
-            <span className="text-green-500 text">Better Health</span>
+            <span className="text-green-500">Better Health</span>
           </h2>
-          <p className="py-3 text-base ">
-            Khana Khazana provide you best food Quality ,that is prepared with love and Hygine our main Moto is to make food and Deliver to you as much as faster.WE ARE YOU, AND YOU ARE <p className='text-green-600 '>KHANA KHAZANA</p> 
+          <p className="py-3 text-base">
+            Khana Khazana provides you with the best food quality, prepared with love and hygiene. Our main motto is to make food and deliver it to you as quickly as possible. WE ARE YOU, AND YOU ARE <span className='text-green-600'>KHANA KHAZANA</span>
           </p>
-          <button className="font-bold bg-red-500 text-slate-200 px-4 py-2 rounded-md">
+          {/* <button className="font-bold bg-red-500 text-slate-200 px-4 py-2 rounded-md">
+          
             Order Now
-          </button>
+          </button> */}
         </div>
 
         <div className="md:w-1/2 flex flex-wrap gap-5 p-4 justify-center">
-          {homeProductCartList[0]
-            ? homeProductCartList.map((el) => {
-                return (
-                  <HomeCard
-                    key={el._id}
-                    id={el._id}
-                    image={el.image}
-                    name={el.name}
-                    price={el.price}
-                    category={el.category}
-                  />
-                );
-              })
-            : loadingArray.map((el, index) => {
-                return <HomeCard key={index+"loading"} loading={"Loading..."} />;
-              })}
+          {homeProductCartList.length > 0
+            ? homeProductCartList.map((el) => (
+                <HomeCard
+                  key={el._id}
+                  id={el._id}
+                  image={el.image}
+                  name={el.name}
+                  price={el.price}
+                  category={el.category}
+                />
+              ))
+            : loadingArray.map((_, index) => (
+                <HomeCard key={index + "loading"} loading={"Loading..."} />
+              ))}
         </div>
       </div>
 
       <div className="">
         <div className="flex w-full items-center">
-          <h2 className="font-bold text-2xl text-slate-800 mb-4 ">
-            Our Feauture Menu
+          <h2 className="font-bold text-2xl text-slate-800 mb-4">
+            Our Featured Menu
           </h2>
           <div className="ml-auto flex gap-4">
             <button
               onClick={preveProduct}
-              className="bg-slate-300 hover:bg-slate-400 text-lg  p-1 rounded"
+              className="bg-slate-300 hover:bg-slate-400 text-lg p-1 rounded"
             >
               <GrPrevious />
             </button>
             <button
               onClick={nextProduct}
-              className="bg-slate-300 hover:bg-slate-400 text-lg p-1 rounded "
+              className="bg-slate-300 hover:bg-slate-400 text-lg p-1 rounded"
             >
               <GrNext />
             </button>
@@ -102,27 +99,24 @@ const Home = () => {
           className="flex gap-5 overflow-scroll scrollbar-none scroll-smooth transition-all"
           ref={slideProductRef}
         >
-          {homeProductCartListVegetables[0]
-            ? homeProductCartListVegetables.map((el) => {
-                return (
-                  <CardFeature
-                    key={el._id+ "icecrem"}
-                    id={el._id}
-                    name={el.name}
-                    category={el.category}
-                    price={el.price}
-                    image={el.image}
-                    
-                  />
-                );
-              })
-            : loadingArrayFeature.map((el,index) => (
-                <CardFeature loading="Loading..." key={index+"cartLoading"} />
+          {homeProductCartListVegetables.length > 0
+            ? homeProductCartListVegetables.map((el) => (
+                <CardFeature
+                  key={el._id}
+                  id={el._id}
+                  name={el.name}
+                  category={el.category}
+                  price={el.price}
+                  image={el.image}
+                />
+              ))
+            : loadingArrayFeature.map((_, index) => (
+                <CardFeature loading="Loading..." key={index + "cartLoading"} />
               ))}
         </div>
       </div>
       
-      <AllProduct heading={"Your Product"}/>
+      <AllProduct heading={"Your Product"} />
     </div>
   );
 };

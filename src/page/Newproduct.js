@@ -84,19 +84,24 @@ const Newproduct = () => {
     {/* ... other options ... */}
   
          
-          <option value={"vegitable"}> Vegetable</option>
-          <option value={"icecrem"}>Ice Cream</option>
+          <option value={"vegetable"}> Vegetable</option>
+          <option value={"icecraem"}>Ice Cream</option>
          <option value={"cupcake"}>Cupcake</option>
          <option value={"mixedfruit"}>Mixedfruit</option>
          <option value={'egg'}>Egg</option>
          <option value={'fish'}>Fish</option>
          <option value={'cake'}>Cake</option>
          <option value={'frenchfries'}>French fries</option>
-         <option value={'chiness'}>Chiness</option>
+         <option value={'chinese'}>Chiness</option>
          <option value={'eggs'}>Egg</option>
          <option value={'salad'}>salad</option>
          <option value={'momos'}>Momos</option>
          <option value={'briyani'}>Briyani</option>
+         <option value={'special Thali'}>special Thali</option>
+         <option value={'naan'}>naan</option>
+         <option value={'Garlic naan'}>Garlic naan</option>
+         <option value={'Special dish'}>special Dish</option>
+
       
         </select>
 
